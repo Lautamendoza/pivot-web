@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 function App() {
+  // Lógica del botón "Volver Arriba"
+  const [mostrarBoton, setMostrarBoton] = useState(false);
+
+  useEffect(() => {
+    const controlarScroll = () => {
+      if (window.scrollY > 400) {
+        setMostrarBoton(true);
+      } else {
+        setMostrarBoton(false);
+      }
+    };
+    window.addEventListener('scroll', controlarScroll);
+    return () => window.removeEventListener('scroll', controlarScroll);
+  }, []);
+
+  const volverArriba = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans selection:bg-emerald-500 selection:text-white relative">
       
       {/* NAVBAR */}
       <nav className="container mx-auto px-6 py-6 flex justify-between items-center border-b border-gray-800">
@@ -100,7 +119,12 @@ function App() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
             >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center text-2xl mb-6 border border-gray-800">🤝</div>
+              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-bold mb-3 text-white">100% Local y Presencial</h3>
               <p className="text-gray-400 leading-relaxed">
                 Si tenés un problema, no hablás con un bot ni mandás un ticket a otro país. Voy a tu local y lo resolvemos cara a cara.
@@ -115,7 +139,11 @@ function App() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
             >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center text-2xl mb-6 border border-gray-800">⚡</div>
+              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-bold mb-3 text-white">Tecnología de Alta Gama</h3>
               <p className="text-gray-400 leading-relaxed">
                 No usamos WordPress. Desarrollamos con React y bases de datos robustas para que tu página vuele y posicione en Google.
@@ -130,7 +158,11 @@ function App() {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
             >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center text-2xl mb-6 border border-gray-800">🔒</div>
+              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-bold mb-3 text-white">Llave en Mano</h3>
               <p className="text-gray-400 leading-relaxed">
                 Vos te ocupás de vender. Nosotros gestionamos los servidores, la seguridad, los dominios y los respaldos de tu información.
@@ -140,6 +172,7 @@ function App() {
           </div>
         </div>
       </section>
+      
       {/* PORTAFOLIO / PROYECTOS */}
       <section id="portafolio" className="bg-gray-950 py-24 border-t border-gray-800 overflow-hidden">
         <div className="container mx-auto px-6">
@@ -329,6 +362,7 @@ function App() {
           </div>
         </div>
       </section>
+
       {/* PREGUNTAS FRECUENTES (FAQ) */}
       <section id="faq" className="bg-gray-900 py-24 border-t border-gray-800 overflow-hidden">
         <div className="container mx-auto px-6 max-w-4xl">
@@ -408,8 +442,13 @@ function App() {
                   </svg>
                 </span>
               </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed">
-                El abono funciona como un seguro para tu tranquilidad. Cubre el pago del servidor en la nube (Hosting de alta velocidad), la renovación del certificado de seguridad (el candadito HTTPS), copias de seguridad de tu base de datos y un monitoreo constante para asegurar que tu web esté siempre funcionando. Vos te ocupás de tu negocio, PIVOT cuida tu web.
+              <div className="px-6 pb-6 text-gray-400 leading-relaxed space-y-4">
+                <p>
+                  El abono funciona como un seguro para tu tranquilidad. Cubre el pago del servidor en la nube (Hosting de alta velocidad), la renovación del certificado de seguridad (el candadito HTTPS), copias de seguridad de tu base de datos y un monitoreo constante para asegurar que tu web esté siempre funcionando. Vos te ocupás de tu negocio, PIVOT cuida tu web.
+                </p>
+                <div className="bg-gray-900 p-4 rounded-lg border border-gray-800 text-sm">
+                  <strong className="text-emerald-400">Aclaración de pagos (Cotización):</strong> Para tu mayor comodidad, los presupuestos y abonos expresados en USD se abonan en Pesos Argentinos (ARS) mediante transferencia bancaria. Se tomará como referencia el tipo de cambio <strong>Dólar Vendedor MEP</strong> (del portal DólarHoy) correspondiente al día de la facturación.
+                </div>
               </div>
             </motion.details>
 
@@ -437,6 +476,7 @@ function App() {
           </div>
         </div>
       </section>
+
       {/* CALL TO ACTION FINAL */}
       <section className="bg-emerald-600 py-20 relative overflow-hidden">
         {/* Fondo decorativo */}
@@ -527,6 +567,19 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* BOTÓN FLOTANTE VOLVER ARRIBA */}
+      <button 
+        onClick={volverArriba}
+        className={`fixed bottom-8 right-8 p-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-lg shadow-emerald-900/50 z-50 transition-all duration-300 flex items-center justify-center ${
+          mostrarBoton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        }`}
+        aria-label="Volver arriba"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
 
     </div>
   );
