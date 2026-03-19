@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import logotipo from './assets/LOGOTIPO.JPG';
 
 function App() {
-  // Lógica del botón "Volver Arriba"
   const [mostrarBoton, setMostrarBoton] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   useEffect(() => {
     const controlarScroll = () => {
-      if (window.scrollY > 400) {
-        setMostrarBoton(true);
-      } else {
-        setMostrarBoton(false);
-      }
+      setMostrarBoton(window.scrollY > 400);
     };
     window.addEventListener('scroll', controlarScroll);
     return () => window.removeEventListener('scroll', controlarScroll);
@@ -21,565 +19,267 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const Reveal = ({ children }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans selection:bg-emerald-500 selection:text-white relative">
+    <div className="min-h-screen bg-prestige text-blanco-hueso font-sans selection:bg-blanco-hueso selection:text-verde-bosque overflow-x-hidden">
       
       {/* NAVBAR */}
-      <nav className="container mx-auto px-6 py-6 flex justify-between items-center border-b border-gray-800">
-        <div className="text-2xl font-bold tracking-tighter">
-          PI<span className="text-emerald-500 animate-pulse">V</span>OT <span className="text-sm font-normal text-gray-600 ml-2">&lt;DevStudio /&gt;</span>
+      <nav className="container mx-auto px-8 py-10 flex justify-between items-center z-50 relative border-b border-white/5">
+        <div className="flex items-center gap-4">
+          <img 
+            src={logotipo} 
+            alt="PIVOT Imagotipo" 
+            className="h-12 w-auto object-contain" 
+          />
+          <div className="hidden sm:block h-8 w-px bg-white/10 mx-2" />
+          <span className="hidden sm:block text-[10px] font-sans font-normal opacity-40 tracking-[0.3em] uppercase">
+            &lt;EST. 2026 /&gt;
+          </span>
         </div>
-        <div className="hidden md:flex space-x-8 text-sm font-medium">
-          <a href="#ventajas" className="hover:text-emerald-400 transition-colors">Por qué elegirnos</a>
-          <a href="#planes" className="hover:text-emerald-400 transition-colors">Planes</a>
+        <div className="hidden md:flex space-x-16 text-[10px] uppercase tracking-[0.4em] font-medium opacity-60">
+          <a href="#ventajas" className="hover:opacity-100 transition-opacity">Prestigio</a>
+          <a href="#planes" className="hover:opacity-100 transition-opacity">Soluciones</a>
+          <a href="#terminos" className="hover:opacity-100 transition-opacity">Acuerdos</a>
         </div>
         <a 
           href="https://wa.link/nofyhp" 
           target="_blank" 
           rel="noreferrer"
-          className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-md font-semibold transition-all"
+          className="bg-blanco-hueso text-verde-bosque px-10 py-3 rounded-none font-bold text-xs uppercase tracking-[0.2em] transition-all hover:bg-opacity-90 hover:scale-105 active:scale-95"
         >
           Hablemos
         </a>
       </nav>
 
-      {/* HERO SECTION */}
-      <header className="container mx-auto px-6 py-24 flex flex-col items-center text-center overflow-hidden">
+      {/* HERO SECTION - REINVENTED */}
+      <header className="container mx-auto px-8 py-32 md:py-48 flex flex-col items-center text-center relative">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-white/20" />
         
-        {/* Etiqueta animada */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-block px-4 py-1 mb-6 rounded-full bg-gray-900 border border-gray-800 text-emerald-400 text-sm font-semibold tracking-wide"
-        >
-          📍 Soluciones Digitales en Rafaela y Zona
-        </motion.div>
+        <Reveal>
+          <div className="inline-block px-6 py-2 mb-12 rounded-none border border-white/10 text-blanco-hueso text-[10px] font-medium uppercase tracking-[0.3em] backdrop-blur-md">
+            📍 Rafaela, Santa Fe — Argentina
+          </div>
+        </Reveal>
 
-        {/* Título animado */}
         <motion.h1 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 max-w-4xl"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="text-6xl md:text-[120px] font-serif font-bold tracking-tighter mb-12 max-w-6xl leading-[0.9] text-balance"
         >
           El cambio en la <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">
-            dirección correcta
-          </span> para tu Pyme.
+          <span className="italic font-normal opacity-70 serif-font">dirección correcta.</span>
         </motion.h1>
 
-        {/* Párrafo animado */}
-        <motion.p 
+        <Reveal>
+          <p className="text-xl md:text-2xl opacity-60 max-w-4xl mb-16 leading-relaxed font-serif italic-font">
+            En <span className="text-blanco-hueso opacity-100">PIVOT</span> desarrollamos tu página web y sistemas de gestión bajo estándares de alto prestigio. 
+            Elevamos tu presencia online a la altura de la trayectoria que representás.
+          </p>
+        </Reveal>
+
+        <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed"
+          transition={{ duration: 1, delay: 1 }}
+          className="flex flex-col sm:flex-row gap-10 items-center"
         >
-          Olvidate de las plantillas lentas y el soporte automatizado. Creamos sitios web a medida, ultrarrápidos y seguros. Nos juntamos, lo charlamos presencialmente y lo hacemos realidad.
-        </motion.p>
-
-        {/* Botones animados */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4"
-        >
-          <a href="https://wa.link/nofyhp" className="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg shadow-emerald-900/50 transition-all flex items-center justify-center gap-2">
-            ☕ Agendar un café
+          <a href="https://wa.link/nofyhp" className="text-blanco-hueso border-b border-blanco-hueso/30 pb-2 text-sm uppercase tracking-[0.3em] font-bold hover:border-blanco-hueso transition-all">
+            Iniciar Auditoría
           </a>
-          <a href="#planes" className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-lg font-bold text-lg border border-gray-700 transition-all flex items-center justify-center">
-            Ver paquetes
+          <a href="#planes" className="group flex items-center gap-4 text-xs uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity">
+            <span className="w-12 h-px bg-white/20 group-hover:w-16 transition-all" />
+            Explorar Soluciones
           </a>
         </motion.div>
       </header>
 
-      {/* VALUE PROPOSITION / FEATURES (Animaciones al hacer Scroll) */}
-      <section id="ventajas" className="bg-gray-900 py-24 border-t border-gray-800 overflow-hidden">
-        <div className="container mx-auto px-6">
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
-          >
-            Tu negocio necesita una web, <span className="text-gray-500 block mt-2">no un dolor de cabeza.</span>
-          </motion.h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            
-            {/* Feature 1 */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
-            >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">100% Local y Presencial</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Si tenés un problema, no hablás con un bot ni mandás un ticket a otro país. Voy a tu local y lo resolvemos cara a cara.
+      {/* VALORES - ASYMMETRIC LAYOUT */}
+      <section id="ventajas" className="py-48 bg-white/2 backdrop-blur-3xl border-y border-white/5 relative overflow-hidden">
+        <div className="container mx-auto px-8">
+          <div className="grid md:grid-cols-2 gap-24 items-center">
+            <Reveal>
+              <h2 className="text-4xl md:text-7xl font-serif font-bold leading-none mb-10">
+                Tu visión merece <br/> 
+                <span className="italic font-normal opacity-50">distinción absoluta.</span>
+              </h2>
+              <p className="text-lg opacity-40 max-w-md font-sans leading-loose tracking-wide uppercase text-[11px]">
+                No somos una agencia convencional. Somos un estudio de ingeniería que prioriza el prestigio y la exclusividad sobre lo genérico.
               </p>
-            </motion.div>
+            </Reveal>
 
-            {/* Feature 2 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
-            >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Tecnología de Alta Gama</h3>
-              <p className="text-gray-400 leading-relaxed">
-                No usamos WordPress. Desarrollamos con React y bases de datos robustas para que tu página vuele y posicione en Google.
-              </p>
-            </motion.div>
-
-            {/* Feature 3 */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-colors"
-            >
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-6 border border-gray-800 text-emerald-500">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Llave en Mano</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Vos te ocupás de vender. Nosotros gestionamos los servidores, la seguridad, los dominios y los respaldos de tu información.
-              </p>
-            </motion.div>
-
-          </div>
-        </div>
-      </section>
-      
-      {/* PORTAFOLIO / PROYECTOS */}
-      <section id="portafolio" className="bg-gray-950 py-24 border-t border-gray-800 overflow-hidden">
-        <div className="container mx-auto px-6">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Nuestros Trabajos: Potencia Web en Cada Pantalla.
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Adaptamos tu negocio para que vuele en cualquier dispositivo, de la mano de tecnologías modernas.
-            </p>
-          </motion.div>
-          
-          {/* Grilla de Dispositivos */}
-          <div className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto items-end">
-            
-            {/* Celular - Ejemplo 1 */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, x: -30 }}
-              whileInView={{ opacity: 1, scale: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-center"
-            >
-              <div className="bg-gray-900 p-3 rounded-3xl border-2 border-gray-800 shadow-xl inline-block max-w-[280px] hover:border-emerald-500 transition-colors">
-                <img src="/mockup-phone.png" alt="Ejemplo Pizzería El Rafa" className="rounded-[20px] aspect-[9/16] object-cover bg-gray-800" />
-              </div>
-              <h3 className="text-lg font-bold text-white mt-6">Pizzería 'El Rafa'</h3>
-              <p className="text-sm text-gray-500">Plan Básico</p>
-            </motion.div>
-
-            {/* Notebook - Ejemplo 2 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-center"
-            >
-              <div className="bg-gray-900 p-4 rounded-xl border-2 border-gray-800 shadow-xl inline-block hover:border-emerald-500 transition-colors">
-                <img src="/mockup-notebook.png" alt="Ejemplo Metalúrgica San Martín" className="rounded-lg aspect-[16/10] object-cover bg-gray-800" />
-              </div>
-              <h3 className="text-xl font-bold text-white mt-6">Metalúrgica San Martín</h3>
-              <p className="text-sm text-gray-500">Plan Catálogo</p>
-            </motion.div>
-
-            {/* PC Escritorio - Ejemplo 3 */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, x: 30 }}
-              whileInView={{ opacity: 1, scale: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-center"
-            >
-              <div className="bg-gray-900 p-5 rounded-lg border-2 border-gray-800 shadow-xl inline-block hover:border-emerald-500 transition-colors">
-                <img src="/mockup-desktop.png" alt="Ejemplo Inmobiliaria Ciudad" className="rounded aspect-[16/9] object-cover bg-gray-800" />
-              </div>
-              <h3 className="text-xl font-bold text-white mt-6">Inmobiliaria Ciudad</h3>
-              <p className="text-sm text-gray-500">Plan E-Commerce</p>
-            </motion.div>
-
-          </div>
-          
-          <div className="text-center mt-12">
-            <p className="text-xs text-gray-600">Adaptamos tu negocio para que vuele en cualquier dispositivo.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* PLANES Y PRECIOS */}
-      <section id="planes" className="bg-gray-900 py-24 border-t border-gray-800 overflow-hidden">
-        <div className="container mx-auto px-6">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Planes claros, <span className="text-emerald-500">sin sorpresas.</span>
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Elegí el nivel de transformación digital que tu negocio necesita hoy. Cotizados en ARS, pagaderos en pesos al cambio del día.
-            </p>
-          </motion.div>
-          
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-            
-            {/* Plan 1: Básico */}
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-gray-600 transition-colors"
-            >
-              <h3 className="text-2xl font-bold text-white mb-2">Inicio</h3>
-              <p className="text-gray-400 text-sm mb-6">La tarjeta de presentación digital perfecta para profesionales.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-extrabold text-white">$300.000</span>
-                <span className="text-gray-500 font-medium"> ARS</span>
-              </div>
-              <ul className="text-gray-300 space-y-4 mb-8 text-sm">
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Landing Page (Carga instantánea)</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Formulario de contacto directo</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Botón flotante de WhatsApp</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Diseño Adaptable (Celulares)</li>
-              </ul>
-              <div className="p-4 bg-gray-900 rounded-lg border border-gray-800 mb-8">
-                <p className="text-xs text-gray-400 text-center">Mantenimiento y Hosting</p>
-                <p className="text-emerald-400 font-bold text-center mt-1">$30 USD / mes</p>
-              </div>
-              <a href="https://wa.link/apw83b" className="block w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white text-center font-bold rounded-lg transition-colors border border-gray-700">
-                Consultar Plan
-              </a>
-            </motion.div>
-
-            {/* Plan 2: Medio (Destacado) */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-gray-950 p-8 rounded-2xl border-2 border-emerald-500 relative transform lg:-translate-y-4 shadow-2xl shadow-emerald-900/20"
-            >
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                Más Elegido
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Catálogo</h3>
-              <p className="text-gray-400 text-sm mb-6">Ideal para comercios que quieren mostrar sus productos.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-extrabold text-white">$500.000</span>
-                <span className="text-gray-500 font-medium"> ARS</span>
-              </div>
-              <ul className="text-gray-300 space-y-4 mb-8 text-sm">
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Todo lo del Plan Inicio</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> <b>Panel de Control Propio</b></li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Catálogo de productos autogestionable</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Buscador rápido con PostgreSQL</li>
-              </ul>
-              <div className="p-4 bg-gray-900 rounded-lg border border-gray-800 mb-8">
-                <p className="text-xs text-gray-400 text-center">Mantenimiento y Hosting</p>
-                <p className="text-emerald-400 font-bold text-center mt-1">$40 USD / mes</p>
-              </div>
-              <a href="https://wa.link/7x3t3q" className="block w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white text-center font-bold rounded-lg transition-colors shadow-lg shadow-emerald-900/50">
-                Elegir Plan
-              </a>
-            </motion.div>
-
-            {/* Plan 3: Tope */}
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-gray-950 p-8 rounded-2xl border border-gray-800 hover:border-gray-600 transition-colors"
-            >
-              <h3 className="text-2xl font-bold text-white mb-2">E-Commerce</h3>
-              <p className="text-gray-400 text-sm mb-6">La solución total para vender online 24/7 y procesar pagos.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-extrabold text-white">$700.000</span>
-                <span className="text-gray-500 font-medium"> ARS</span>
-              </div>
-              <ul className="text-gray-300 space-y-4 mb-8 text-sm">
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Todo lo del Plan Catálogo</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Carrito de compras avanzado</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Integración con MercadoPago</li>
-                <li className="flex items-start gap-3"><span className="text-emerald-500">✓</span> Login y registro de usuarios</li>
-              </ul>
-              <div className="p-4 bg-gray-900 rounded-lg border border-gray-800 mb-8">
-                <p className="text-xs text-gray-400 text-center">Mantenimiento y Hosting</p>
-                <p className="text-emerald-400 font-bold text-center mt-1">$50 USD / mes</p>
-              </div>
-              <a href="https://wa.link/7x3t3q" className="block w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white text-center font-bold rounded-lg transition-colors border border-gray-700">
-                Consultar Plan
-              </a>
-            </motion.div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* PREGUNTAS FRECUENTES (FAQ) */}
-      <section id="faq" className="bg-gray-900 py-24 border-t border-gray-800 overflow-hidden">
-        <div className="container mx-auto px-6 max-w-4xl">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Preguntas <span className="text-emerald-500">Frecuentes.</span>
-            </h2>
-            <p className="text-gray-400 text-lg">
-              Despejá tus dudas antes de arrancar. Sin tecnicismos, directo al grano.
-            </p>
-          </motion.div>
-          
-          <div className="space-y-4">
-            
-            {/* Pregunta 1 */}
-            <motion.details 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="group bg-gray-950 border border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex items-center justify-between p-6 cursor-pointer text-white font-bold text-lg hover:text-emerald-400 transition-colors">
-                ¿Tengo que saber de computación o diseño?
-                <span className="text-emerald-500 transition duration-300 group-open:-rotate-180">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed">
-                No, para nada. El servicio de PIVOT es "llave en mano". Nosotros nos encargamos de todo el código, el diseño y la configuración técnica. Si elegís un plan con panel de control, te enseñamos a usarlo en 15 minutos para que puedas subir fotos y cambiar precios vos mismo, tan fácil como usar Facebook.
-              </div>
-            </motion.details>
-
-            {/* Pregunta 2 */}
-            <motion.details 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="group bg-gray-950 border border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex items-center justify-between p-6 cursor-pointer text-white font-bold text-lg hover:text-emerald-400 transition-colors">
-                ¿Qué diferencia hay con Tiendanube o Wix?
-                <span className="text-emerald-500 transition duration-300 group-open:-rotate-180">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed">
-                Wix o Tiendanube son plataformas de "hacelo vos mismo" donde alquilás una plantilla genérica. PIVOT es desarrollo profesional a medida. Utilizamos código real que usan las grandes empresas para que tu web cargue al instante y posicione mejor en Google. Además, no hablás con un chat de soporte; nos sentamos a tomar un café en tu local y lo resolvemos en persona.
-              </div>
-            </motion.details>
-
-            {/* Pregunta 3 */}
-            <motion.details 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="group bg-gray-950 border border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex items-center justify-between p-6 cursor-pointer text-white font-bold text-lg hover:text-emerald-400 transition-colors">
-                ¿Qué incluye el abono mensual de mantenimiento?
-                <span className="text-emerald-500 transition duration-300 group-open:-rotate-180">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed space-y-4">
-                <p>
-                  El abono funciona como un seguro para tu tranquilidad. Cubre el pago del servidor en la nube (Hosting de alta velocidad), la renovación del certificado de seguridad (el candadito HTTPS), copias de seguridad de tu base de datos y un monitoreo constante para asegurar que tu web esté siempre funcionando. Vos te ocupás de tu negocio, PIVOT cuida tu web.
-                </p>
-                <div className="bg-gray-900 p-4 rounded-lg border border-gray-800 text-sm">
-                  <strong className="text-emerald-400">Aclaración de pagos (Cotización):</strong> Para tu mayor comodidad, los presupuestos y abonos expresados en USD se abonan en Pesos Argentinos (ARS) mediante transferencia bancaria. Se tomará como referencia el tipo de cambio <strong>Dólar Vendedor MEP</strong> (del portal DólarHoy) correspondiente al día de la facturación.
+            <div className="space-y-24">
+              <Reveal>
+                <div className="flex gap-10 items-start">
+                  <span className="text-4xl font-serif italic opacity-20">01</span>
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold mb-4 italic">Trato Personalizado</h3>
+                    <p className="opacity-50 font-sans leading-relaxed">Entendemos tu negocio cara a cara en Rafaela y zona. Sin intermediarios, sin bots. PIVOT es compromiso directo.</p>
+                  </div>
                 </div>
-              </div>
-            </motion.details>
+              </Reveal>
 
-            {/* Pregunta 4 */}
-            <motion.details 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="group bg-gray-950 border border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex items-center justify-between p-6 cursor-pointer text-white font-bold text-lg hover:text-emerald-400 transition-colors">
-                ¿Quién es el dueño de la página web?
-                <span className="text-emerald-500 transition duration-300 group-open:-rotate-180">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-gray-400 leading-relaxed">
-                Vos sos el dueño absoluto. Una vez finalizado el pago del desarrollo, el código, el dominio y la base de datos te pertenecen. No te cobramos comisiones por ventas ni "secuestramos" tu página si el día de mañana decidís mudar tu servicio a otro lado.
-              </div>
-            </motion.details>
+              <Reveal>
+                <div className="flex gap-10 items-start translate-x-12">
+                  <span className="text-4xl font-serif italic opacity-20">02</span>
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold mb-4 italic">Ingeniería Web</h3>
+                    <p className="opacity-50 font-sans leading-relaxed">Código a medida de alto rendimiento. Nuestra lógica de backend es el activo que garantiza tu seguridad y velocidad.</p>
+                  </div>
+                </div>
+              </Reveal>
 
+              <Reveal>
+                <div className="flex gap-10 items-start">
+                  <span className="text-4xl font-serif italic opacity-20">03</span>
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold mb-4 italic">Exclusividad Premium</h3>
+                    <p className="opacity-50 font-sans leading-relaxed">Cada proyecto es una pieza única de software. Reflejamos la autoridad de tu marca en cada píxel.</p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CALL TO ACTION FINAL */}
-      <section className="bg-emerald-600 py-20 relative overflow-hidden">
-        {/* Fondo decorativo */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute transform rotate-45 bg-white w-96 h-96 rounded-[100px] -top-20 -left-20"></div>
-          <div className="absolute transform rotate-45 bg-white w-96 h-96 rounded-[100px] bottom-10 right-10"></div>
-        </div>
+      {/* SOLUCIONES - PREMIUM CARDS */}
+      <section id="planes" className="container mx-auto px-8 py-48">
+        <Reveal>
+          <div className="text-center mb-32">
+            <h2 className="text-5xl md:text-8xl font-serif font-bold mb-8 italic">Ecosistemas</h2>
+            <p className="text-xs uppercase tracking-[0.5em] opacity-40 font-medium">Soluciones diseñadas para perdurar</p>
+          </div>
+        </Reveal>
 
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <motion.h2 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl font-extrabold text-white mb-6"
+        <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto">
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="p-16 bg-white/[0.03] border border-white/5 relative overflow-hidden group"
           >
-            ¿Listo para digitalizar tu negocio en serio?
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-emerald-100 text-lg md:text-xl max-w-2xl mx-auto mb-10"
+            <div className="absolute -right-10 -top-10 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <h3 className="text-[10px] uppercase tracking-[0.4em] mb-12 opacity-40 font-bold">Concepto 01</h3>
+            <h4 className="text-4xl font-serif font-bold mb-8 italic text-balance">Presencia & <br/>Autoridad Digital</h4>
+            <p className="opacity-50 mb-12 leading-relaxed font-sans max-w-xs">Landings de autor para quienes no aceptan una plantilla como respuesta. Velocidad y diseño de vanguardia.</p>
+            <div className="flex justify-between items-center border-t border-white/10 pt-10">
+              <span className="text-xs font-bold uppercase tracking-widest italic">Landing de Autor</span>
+              <a href="https://wa.link/nofyhp" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-blanco-hueso group-hover:text-verde-bosque transition-all">→</a>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="p-16 bg-white/[0.03] border border-white/5 relative overflow-hidden group"
           >
-            Escribinos hoy. Nos acercamos a tu empresa, escuchamos qué necesitás y te armamos un presupuesto sin compromiso.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <a 
-              href="https://wa.link/nofyhp"  
-              className="inline-flex items-center gap-3 bg-gray-950 hover:bg-gray-900 text-white px-10 py-5 rounded-xl font-bold text-xl shadow-2xl transition-transform hover:scale-105"
-            >
-              💬 Iniciar chat por WhatsApp
-            </a>
+            <div className="absolute -right-10 -top-10 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <h3 className="text-[10px] uppercase tracking-[0.4em] mb-12 opacity-40 font-bold">Concepto 02</h3>
+            <h4 className="text-4xl font-serif font-bold mb-8 italic text-balance">Sistemas de <br/>Gestión a Medida</h4>
+            <p className="opacity-50 mb-12 leading-relaxed font-sans max-w-xs">Software de núcleo empresarial. Gestión, control y escalabilidad bajo infraestructura de alta seguridad.</p>
+            <div className="flex justify-between items-center border-t border-white/10 pt-10">
+              <span className="text-xs font-bold uppercase tracking-widest italic">Crecimiento Estructural</span>
+              <a href="https://wa.link/nofyhp" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-blanco-hueso group-hover:text-verde-bosque transition-all">→</a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-gray-950 py-12 border-t border-gray-800">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8 mb-8 items-center text-center md:text-left">
-            
-            {/* Marca */}
-            <div>
-              <div className="text-3xl font-bold tracking-tighter mb-2">
-                PI<span className="text-emerald-500">V</span>OT
-              </div>
-              <p className="text-gray-500 text-sm">El cambio en la dirección correcta.</p>
-            </div>
+      {/* TERMINOS Y CONDICIONES */}
+      <section id="terminos" className="py-48 bg-white/2 border-t border-white/5">
+        <div className="container mx-auto px-8 max-w-5xl">
+          <Reveal>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-24 text-center tracking-tighter">
+              TÉRMINOS Y CONDICIONES <br/>
+              <span className="italic font-normal opacity-50 text-2xl md:text-3xl">— DE SERVICIO PIVOT —</span>
+            </h2>
+          </Reveal>
 
-            {/* Ubicación y Contacto */}
-            <div className="flex flex-col items-center md:items-start text-gray-400 text-sm space-y-2">
-              <p className="flex items-center gap-2">
-                <span>📍</span> Rafaela, Santa Fe, Argentina.
-              </p>
-              <p className="flex items-center gap-2">
-                <span>🤝</span> Atención presencial exclusiva.
-              </p>
-            </div>
+          <div className="space-y-20 font-sans text-sm leading-loose opacity-70">
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">1. OBJETO Y ALCANCE</h3>
+              <p>El presente documento establece los términos bajo los cuales PIVOT (en adelante, "La Startup") provee servicios de desarrollo web, diseño de interfaces y sistemas de gestión empresarial a medida. La contratación de cualquier servicio implica la aceptación plena de estas condiciones de alta profesionalidad y estándar técnico.</p>
+            </Reveal>
 
-            {/* Redes Sociales */}
-            <div className="flex justify-center md:justify-end gap-4">
-              <a href="https://www.instagram.com/pivot.web/" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:bg-gray-800 transition-colors">
-                {/* Ícono de Instagram (SVG simplificado) */}
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:bg-gray-800 transition-colors">
-                {/* Ícono de LinkedIn (SVG simplificado) */}
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
-                </svg>
-              </a>
-            </div>
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">2. ESPECIFICACIONES DE PAGO Y MONEDA</h3>
+              <p className="mb-6">Para garantizar la estabilidad y el mantenimiento de estándares tecnológicos de vanguardia, PIVOT establece el siguiente esquema de honorarios:</p>
+              <ul className="space-y-6 pl-6 border-l border-white/10">
+                <li><strong>Desarrollo Inicial:</strong> El costo de creación, diseño e implementación del proyecto se estipula en Pesos Argentinos (ARS), cancelables según el cronograma de hitos acordado (Anticipo y Entrega Final).</li>
+                <li><strong>Mantenimiento y Soporte:</strong> El abono mensual por servicios de infraestructura, hosting de alta velocidad, certificados SSL y soporte técnico se fija en Dólares Estadounidenses (USD).</li>
+                <li><strong>Conversión:</strong> El pago de dicha mensualidad se realizará en Pesos Argentinos (ARS), calculados según la cotización del Dólar MEP (Mercado Electrónico de Pagos) del día hábil anterior a la fecha de facturación.</li>
+              </ul>
+            </Reveal>
 
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">3. PROPIEDAD INTELECTUAL Y LICENCIAMIENTO</h3>
+              <p className="mb-6 italic">PIVOT protege su activo más valioso: la ingeniería de software.</p>
+              <ul className="space-y-6 pl-6 border-l border-white/10">
+                <li><strong>Activos Visuales:</strong> Una vez cancelado el total del servicio, PIVOT cede al Cliente la propiedad sobre el diseño estético, logotipos aplicados y contenido visual del sitio.</li>
+                <li><strong>Sistemas y Código Fuente:</strong> El Código Fuente Base, las arquitecturas de sistemas de gestión y la lógica de programación interna son propiedad intelectual exclusiva de PIVOT.</li>
+                <li><strong>Licencia de Uso:</strong> Se otorga al Cliente una Licencia de Uso Perpetua e Intransferible sobre la tecnología desarrollada. El acceso al código fuente original (backend/lógica de negocio) no está incluido en el servicio estándar, resguardando la integridad del software y la seguridad del ecosistema PIVOT.</li>
+              </ul>
+            </Reveal>
+
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">4. CONTINUIDAD DEL SERVICIO</h3>
+              <p className="mb-6 italic">El prestigio de PIVOT se basa en la disponibilidad y seguridad de sus sistemas.</p>
+              <ul className="space-y-6 pl-6 border-l border-white/10">
+                <li><strong>Mora:</strong> El incumplimiento en el pago del abono mensual por un período superior a los treinta (30) días corridos facultará a PIVOT a suspender temporalmente el acceso al sistema y la visibilidad de la plataforma para resguardar los recursos del servidor.</li>
+                <li><strong>Soporte:</strong> PIVOT garantiza un tiempo de respuesta profesional ante incidencias técnicas, priorizando la estabilidad del negocio del cliente.</li>
+              </ul>
+            </Reveal>
+
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">5. CONFIDENCIALIDAD</h3>
+              <p>PIVOT se compromete a mantener estricta confidencialidad sobre los datos de facturación, bases de datos de clientes y estrategias comerciales a las que tenga acceso durante el desarrollo de sistemas de gestión, bajo las normativas de Protección de Datos Personales de la República Argentina.</p>
+            </Reveal>
+
+            <Reveal>
+              <h3 className="text-xl font-serif font-bold mb-6 text-blanco-hueso opacity-100 italic tracking-wide">6. JURISDICCIÓN</h3>
+              <p>Para todos los efectos legales, las partes se someten a la jurisdicción y competencia de los Tribunales Ordinarios de la Ciudad de Rafaela, Provincia de Santa Fe, renunciando a cualquier otro fuero o jurisdicción que pudiera corresponderles.</p>
+            </Reveal>
           </div>
-          
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-            <p>&copy; {new Date().getFullYear()} PIVOT Desarrollo Web. Todos los derechos reservados.</p>
-            <p className="mt-2 md:mt-0">Diseñado y programado con <span className="text-emerald-500">&lt;/&gt;</span> en Argentina.</p>
-          </div>
+        </div>
+      </section>
+
+      {/* FOOTER - MINIMAL */}
+      <footer className="container mx-auto px-8 py-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-12 text-[10px] uppercase tracking-[0.3em] font-medium opacity-30">
+        <div className="flex items-center gap-6">
+          <img 
+            src={logotipo} 
+            alt="PIVOT Logo" 
+            className="h-8 w-auto object-contain" 
+          />
+          <span className="w-8 h-px bg-white/20" />
+          © 2026 PIVOT DEVSTUDIO. RAFAELA.
+        </div>
+        <div className="flex gap-16">
+          <a href="#" className="hover:opacity-100 transition-opacity">Instagram</a>
+          <a href="#" className="hover:opacity-100 transition-opacity">LinkedIn</a>
+          <a href="#" className="hover:opacity-100 transition-opacity">Email</a>
         </div>
       </footer>
 
-      {/* BOTÓN FLOTANTE VOLVER ARRIBA */}
-      <button 
-        onClick={volverArriba}
-        className={`fixed bottom-8 right-8 p-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-lg shadow-emerald-900/50 z-50 transition-all duration-300 flex items-center justify-center ${
-          mostrarBoton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-        aria-label="Volver arriba"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 15l7-7 7 7" />
-        </svg>
-      </button>
+      {/* BACK TO TOP */}
+      {mostrarBoton && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={volverArriba}
+          className="fixed bottom-12 right-12 mix-blend-difference z-50 hover:-translate-y-2 transition-transform"
+        >
+          <span className="text-[10px] uppercase tracking-[0.3em] text-blanco-hueso border-b border-blanco-hueso/20 pb-2">Top</span>
+        </motion.button>
+      )}
 
     </div>
   );
