@@ -17,8 +17,8 @@ const Reveal = ({ children }) => (
   </motion.div>
 );
 
-const PrestigeMap = () => (
-  <section className="w-full max-w-xl aspect-[21/9] mt-12 mb-8 border border-white/10 shadow-2xl overflow-hidden relative group">
+const PrestigeMap = ({ isFooter = false }) => (
+  <div className={`${isFooter ? 'w-full h-48 md:h-64' : 'w-full max-w-xl aspect-[21/9] mt-12 mb-8'} border border-white/10 shadow-2xl overflow-hidden relative group`}>
     <iframe 
       title="Ubicación PIVOT Rafaela"
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54522.012476566275!2d-61.53039148560089!3d-31.258832822457816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95ca630f92f25f2b%3A0xc3f7a63d9196b278!2sRafaela%2C%20Santa%20Fe!5e0!3m2!1ses-419!2sar!4v1709200000000!5m2!1ses-419!2sar" 
@@ -33,7 +33,7 @@ const PrestigeMap = () => (
       loading="lazy"
     ></iframe>
     <div className="absolute inset-0 pointer-events-none bg-verde-bosque/20" />
-  </section>
+  </div>
 );
 
 /**
@@ -123,10 +123,6 @@ function App() {
                 <div className="inline-block px-6 py-2 mb-8 border border-white/20 text-white text-[10px] font-medium uppercase tracking-[0.3em] bg-white/5 backdrop-blur-md">
                   📍 Rafaela, Santa Fe — Argentina
                 </div>
-              </Reveal>
-
-              <Reveal>
-                <PrestigeMap />
               </Reveal>
 
               <motion.h1 
@@ -261,22 +257,33 @@ function App() {
         )}
       </main>
 
-      {/* FOOTER GLOBAL */}
-      <footer className="container mx-auto px-8 py-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-12 text-[10px] uppercase tracking-[0.3em] font-medium opacity-30">
-        <div className="flex items-center gap-6">
-          <img src={logotipo} alt="PIVOT Logo" className="h-6 md:h-8 w-auto object-contain" />
-          <span className="w-8 h-px bg-white/20" />
-          <span>© 2026 PIVOT DEVSTUDIO. RAFAELA.</span>
-        </div>
-        <div className="flex gap-16">
-          <button 
-            onClick={() => irA('terminos')} 
-            className="bg-transparent border-none text-white cursor-pointer uppercase text-[10px] tracking-widest opacity-50 hover:opacity-100 transition-opacity font-bold"
-          >
-            Acuerdos
-          </button>
-          <a href="https://www.instagram.com/pivot.web/" target="_blank" rel="noreferrer" className="hover:opacity-100 transition-opacity no-underline text-white">Instagram</a>
-          <a href="mailto:pivotweb.net@gmail.com" className="hover:opacity-100 transition-opacity no-underline text-white">Email</a>
+      {/* FOOTER GLOBAL CON MAPA */}
+      <footer className="bg-white/2 border-t border-white/5 pt-24 pb-12">
+        <div className="container mx-auto px-8 grid lg:grid-cols-2 gap-16 items-start">
+          
+          {/* Información Institucional */}
+          <div className="space-y-12">
+            <div className="flex items-center gap-4">
+              <img src={logotipo} alt="PIVOT Logo" className="h-8 md:h-12 w-auto object-contain" />
+              <span className="w-8 h-px bg-white/20" />
+              <span className="text-[10px] uppercase tracking-[0.3em] font-medium opacity-40 italic">Rafaela, Santa Fe.</span>
+            </div>
+            
+            <div className="flex flex-col gap-6 text-[10px] uppercase tracking-[0.3em] font-medium opacity-30">
+              <div className="flex gap-12">
+                <button onClick={() => irA('terminos')} className="bg-transparent border-none text-white cursor-pointer uppercase text-[10px] tracking-widest font-bold hover:opacity-100 transition-opacity">Acuerdos</button>
+                <a href="https://www.instagram.com/pivot.web/" target="_blank" rel="noreferrer" className="hover:opacity-100 transition-opacity no-underline text-white">Instagram</a>
+                <a href="mailto:pivotweb.net@gmail.com" className="hover:opacity-100 transition-opacity no-underline text-white">Email</a>
+              </div>
+              <p>© 2026 PIVOT DEVSTUDIO. TODOS LOS DERECHOS RESERVADOS.</p>
+            </div>
+          </div>
+
+          {/* Mapa Minimalista */}
+          <div className="w-full">
+            <PrestigeMap isFooter={true} />
+            <p className="mt-4 text-[9px] uppercase tracking-[0.4em] opacity-20 text-right italic font-serif">Presencia Local — Rafaela y Zona</p>
+          </div>
         </div>
       </footer>
 
