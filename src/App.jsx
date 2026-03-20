@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import logotipo from './assets/LOGOTIPO.jpg';
 
@@ -223,7 +223,7 @@ function App() {
             </section>
 
             {/* SECCIÓN PORTAFOLIO / CASOS DE ÉXITO */}
-            <section id="proyectos" className="py-48 overflow-hidden bg-white/1">
+            <section id="proyectos" className="py-48 overflow-hidden bg-white/1 relative group/section">
               <div className="container mx-auto px-8 mb-24">
                 <Reveal>
                   <h2 className="text-5xl md:text-8xl font-serif font-bold mb-8 italic text-white text-balance">Casos de <br/> <span className="opacity-50">éxito</span></h2>
@@ -231,7 +231,28 @@ function App() {
                 </Reveal>
               </div>
 
-              <div className="flex gap-10 overflow-x-auto pb-16 px-8 md:px-[10%] snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing">
+              {/* Botones de Navegación Lateral (Solo visibles en Desktop al hacer hover) */}
+              <div className="hidden md:block">
+                <button 
+                  onClick={() => document.getElementById('slider-proyectos').scrollBy({ left: -500, behavior: 'smooth' })}
+                  className="absolute left-8 top-[60%] -translate-y-1/2 z-40 w-16 h-16 rounded-full border border-white/10 bg-verde-bosque/40 backdrop-blur-xl text-white flex items-center justify-center hover:bg-blanco-hueso hover:text-verde-bosque transition-all opacity-0 group-hover/section:opacity-100 cursor-pointer shadow-2xl"
+                  aria-label="Anterior proyecto"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button 
+                  onClick={() => document.getElementById('slider-proyectos').scrollBy({ left: 500, behavior: 'smooth' })}
+                  className="absolute right-8 top-[60%] -translate-y-1/2 z-40 w-16 h-16 rounded-full border border-white/10 bg-verde-bosque/40 backdrop-blur-xl text-white flex items-center justify-center hover:bg-blanco-hueso hover:text-verde-bosque transition-all opacity-0 group-hover/section:opacity-100 cursor-pointer shadow-2xl"
+                  aria-label="Siguiente proyecto"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+
+              <div 
+                id="slider-proyectos"
+                className="flex gap-10 overflow-x-auto pb-16 px-8 md:px-[10%] snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing scroll-smooth"
+              >
                 {[
                   { t: "Studio Premium", c: "Landing de Autor", d: "Arquitectura de información diseñada para convertir desde cualquier smartphone.", l: "https://wa.link/nofyhp" },
                   { t: "Logística 360", c: "Sistema de Gestión", d: "Panel administrativo totalmente responsivo para control en tiempo real desde el campo.", l: "https://wa.link/nofyhp" },
