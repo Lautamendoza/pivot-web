@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import logotipo from './assets/LOGOTIPO.jpg';
+import casoExito1 from './assets/casoexito1.png';
 
 /**
  * COMPONENTES DE APOYO (Definidos fuera para estabilidad)
@@ -99,13 +100,13 @@ function App() {
           <div className="flex items-center space-x-8 md:space-x-16 text-[10px] uppercase tracking-[0.4em] font-medium opacity-60">
             {vista === 'landing' ? (
               <>
-                <a href="#ventajas" className="hidden lg:block hover:opacity-100 transition-opacity no-underline text-white">Prestigio</a>
+                <a href="#ventajas" className="hidden lg:block hover:opacity-100 transition-opacity no-underline text-white">Qué ofrecemos</a>
                 <a href="#planes" className="hidden lg:block hover:opacity-100 transition-opacity no-underline text-white">Soluciones</a>
                 <button 
                   onClick={() => irA('terminos')} 
                   className="hover:opacity-100 transition-opacity bg-transparent border-none text-white cursor-pointer uppercase tracking-[0.4em]"
                 >
-                  Acuerdos
+                  Términos y Condiciones
                 </button>
               </>
             ) : (
@@ -153,14 +154,13 @@ function App() {
               </motion.h1>
 
               <Reveal>
-                <p className="text-xl md:text-2xl text-blanco-hueso/80 max-w-4xl mb-16 leading-relaxed font-serif italic text-balance">
-                  En <span className="text-white font-bold not-italic">PIVOT</span> desarrollamos tu página web y sistemas de gestión bajo estándares de alto prestigio. 
+                <p className="text-xl md:text-2xl text-blanco-hueso/70 max-w-4xl mb-16 leading-relaxed font-sans font-light tracking-wide text-balance">
+                  En <span className="text-white font-serif font-bold italic">PIVOT</span> desarrollamos tu página web y sistemas de gestión bajo estándares de alto prestigio. 
                   Elevamos tu presencia online a la altura de la trayectoria que representás.
                 </p>
               </Reveal>
-
               <div className="flex flex-col sm:flex-row gap-10 items-center">
-                <a href="https://wa.link/nofyhp" target="_blank" rel="noreferrer" className="text-white border-b border-white/30 pb-2 text-sm uppercase tracking-[0.3em] font-bold no-underline hover:border-white transition-all">Iniciar Auditoría</a>
+                <a href="https://wa.link/nofyhp" target="_blank" rel="noreferrer" className="text-white border-b border-white/30 pb-2 text-sm uppercase tracking-[0.3em] font-bold no-underline hover:border-white transition-all">Contáctenos</a>
                 <a href="#planes" className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 transition-opacity no-underline text-white">
                   <span className="w-12 h-px bg-white/20 group-hover:w-16 transition-all" /> Explorar Soluciones
                 </a>
@@ -199,17 +199,26 @@ function App() {
             <section id="planes" className="container mx-auto px-8 py-48">
               <Reveal>
                 <div className="text-center mb-32">
-                  <h2 className="text-5xl md:text-8xl font-serif font-bold mb-8 italic text-white">Ecosistemas</h2>
+                  <h2 className="text-5xl md:text-8xl font-serif font-bold mb-8 italic text-white">Soluciones</h2>
                   <p className="text-xs uppercase tracking-[0.5em] opacity-40 font-medium">Soluciones diseñadas para perdurar</p>
                 </div>
               </Reveal>
 
               <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto">
                 {[
-                  { c: "01", t: "Presencia & Autoridad Digital", p: "Landings de autor para quienes no aceptan una plantilla como respuesta. Velocidad y diseño de vanguardia.", s: "Landing de Autor" },
-                  { c: "02", t: "Sistemas de Gestión a Medida", p: "Software de núcleo empresarial. Gestión, control y escalabilidad bajo infraestructura de alta seguridad.", s: "Crecimiento Estructural" }
-                ].map((card, i) => (
-                  <motion.div key={i} whileHover={{ y: -10 }} className="p-16 bg-white/[0.03] border border-white/5 relative overflow-hidden group transition-all duration-500">
+                  { 
+                    c: "01", 
+                    t: "Sitios Web de Alto Impacto", 
+                    p: "Creamos páginas web únicas diseñadas específicamente para atraer clientes. Sin plantillas genéricas: solo diseño exclusivo, rápido y que funciona perfecto en celulares.", 
+                    s: "Tu Marca Online" 
+                  },
+                  { 
+                    c: "02", 
+                    t: "Sistemas para tu Negocio", 
+                    p: "Desarrollamos herramientas a medida para organizar tu empresa. Desde control de stock hasta gestión de ventas, todo centralizado en un software fácil de usar.", 
+                    s: "Tu Operación Digital" 
+                  }
+                ].map((card, i) => (                  <motion.div key={i} whileHover={{ y: -10 }} className="p-16 bg-white/[0.03] border border-white/5 relative overflow-hidden group transition-all duration-500">
                     <h3 className="text-[10px] uppercase tracking-[0.4em] mb-12 opacity-40 font-bold text-white text-balance">Concepto {card.c}</h3>
                     <h4 className="text-4xl font-serif font-bold mb-8 italic text-white leading-tight text-balance">{card.t}</h4>
                     <p className="opacity-50 mb-12 leading-relaxed font-sans max-w-xs text-blanco-hueso/80">{card.p}</p>
@@ -254,10 +263,11 @@ function App() {
                 className="flex gap-10 overflow-x-auto pb-16 px-8 md:px-[10%] snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing scroll-smooth"
               >
                 {[
-                  { t: "Studio Premium", c: "Landing de Autor", d: "Arquitectura de información diseñada para convertir desde cualquier smartphone.", l: "https://wa.link/nofyhp" },
+                  { t: "Decoud Colchones", c: "E-commerce Premium", d: "Tienda online de alta gama con pasarela de pagos integrada y diseño ultra-rápido.", l: "https://wa.link/nofyhp", img: casoExito1 },
+                  /*{ t: "Studio Premium", c: "Landing de Autor", d: "Arquitectura de información diseñada para convertir desde cualquier smartphone.", l: "https://wa.link/nofyhp" },
                   { t: "Logística 360", c: "Sistema de Gestión", d: "Panel administrativo totalmente responsivo para control en tiempo real desde el campo.", l: "https://wa.link/nofyhp" },
-                  { t: "Art Gallery", c: "E-commerce Exclusivo", d: "Navegación fluida y visualización de alta resolución en tablets y móviles.", l: "https://wa.link/nofyhp" },
-                  { t: "Salud Digital", c: "Ecosistema Médico", d: "Interfaz pensada para uso rápido en móviles por profesionales en movimiento.", l: "https://wa.link/nofyhp" }
+                  { t: "Art Gallery", c: "E-commerce Exclusivo", d: "Navegación fluida y visualización de alta resolución en tablets y móviles.", l: "https://wa.link/nofyhp" },*/
+                  { t: "Tu Negocio", c: "Sistema a medida", d: "Interfaz personalizada para tus necesidades específicas.", l: "https://wa.link/nofyhp" }  
                 ].map((proj, i) => (
                   <motion.div 
                     key={i} 
@@ -265,11 +275,21 @@ function App() {
                     whileHover={{ y: -8 }}
                   >
                     <div className="aspect-[16/10] bg-white/5 border border-white/10 mb-8 relative overflow-hidden flex items-center justify-center transition-all group-hover:border-white/20 shadow-2xl">
-                      {/* Espacio reservado para imagen (placeholder visual) */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50 group-hover:scale-110 transition-transform duration-700" />
-                      <div className="z-10 text-center">
-                         <span className="text-[10px] uppercase tracking-[0.4em] opacity-30 group-hover:opacity-60 transition-opacity">Espacio para Imagen</span>
-                      </div>
+                      {proj.img ? (
+                        <img 
+                          src={proj.img} 
+                          alt={proj.t} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-30 group-hover:opacity-90" 
+                        />
+                      ) : (
+                        <>
+                          {/* Espacio reservado para imagen (placeholder visual) */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50 group-hover:scale-110 transition-transform duration-700" />
+                          <div className="z-10 text-center">
+                             <span className="text-[10px] uppercase tracking-[0.4em] opacity-30 group-hover:opacity-60 transition-opacity">Espacio para Imagen</span>
+                          </div>
+                        </>
+                      )}
                       
                       {/* Badge Mobile-Ready */}
                       <div className="absolute top-6 right-6 flex items-center gap-2 bg-verde-bosque/40 backdrop-blur-md px-4 py-2 border border-white/10 rounded-full">
@@ -301,14 +321,16 @@ function App() {
               <div className="container mx-auto px-8 text-center relative z-10">
                 <Reveal>
                   <h2 className="text-5xl md:text-9xl font-serif font-bold mb-12 italic text-white tracking-tighter leading-tight">Elevá tu estándar.</h2>
-                  <p className="text-xl md:text-2xl opacity-60 max-w-2xl mx-auto mb-16 font-serif italic text-blanco-hueso/80 text-balance">Iniciemos hoy la transformación de tu presencia digital con la distinción que tu trayectoria merece.</p>
+                  <p className="text-xl md:text-2xl opacity-60 max-w-2xl mx-auto mb-16 font-sans font-light tracking-wide text-blanco-hueso/80 text-balance">
+                    Iniciemos hoy la transformación de tu presencia digital con la distinción que tu trayectoria merece.
+                  </p>
                   <a 
                     href="https://wa.link/nofyhp" 
                     target="_blank" 
-                    rel="noreferrer"
+                    rel="noreferrer" 
                     className="inline-block bg-blanco-hueso text-verde-bosque px-16 py-6 font-bold text-sm md:text-base uppercase tracking-[0.3em] no-underline hover:scale-105 transition-transform shadow-2xl hover:bg-white active:scale-95"
                   >
-                    Hablemos
+                    Hablar con un consultor
                   </a>
                 </Reveal>
               </div>
